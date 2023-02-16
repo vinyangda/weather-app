@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import "./App.css";
+
+import WeatherButton from "./components/WeatherButton";
+import WeatherBox from "./components/WeatherBox";
 
 //앱이 실행 되자마자 현제 위치기반 날씨가 보인다
 //날씨 정보에는 도시, 섭씨, 화씨, 날씨상태정보가 들어간다
@@ -31,12 +35,33 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <header></header>
-    </div>
+    <WeatherWrap>
+      <div className="container">
+        <WeatherBox />
+        <WeatherButton />
+      </div>
+    </WeatherWrap>
   );
 }
 
 //API key : d61cf641bb98e61451beaace9c15aa17
 
 export default App;
+
+const WeatherWrap = styled.div`
+  * {
+    color: white;
+  }
+  background-image: url("https://w0.peakpx.com/wallpaper/489/382/HD-wallpaper-cloudy-earth-cloud-cosmos-earth-space.jpg");
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+`;
