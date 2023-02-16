@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-const WeatherBox = () => {
+const WeatherBox = ({ weather }) => {
+  console.log(weather);
   return (
     <WeatherBoxWrap>
-      <div>Seoul</div>
-      <h2>30</h2>
-      <h3>Clear</h3>
+      <h3>{weather?.name}</h3>
+      <h1>{weather?.main.temp}°C</h1>
+      <h1> {weather?.main.temp * 1.8 + 32}°F</h1>
+      <h3>{weather?.weather[0].description}</h3>
     </WeatherBoxWrap>
   );
 };
