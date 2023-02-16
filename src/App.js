@@ -8,12 +8,22 @@ import "./App.css";
 //현재위치 버튼은 누르면 다시 현재 위치기반 데이터가 나온다
 //로딩스피너
 function App() {
+  // 현재 위치를 가져 올 수 있는 함수 작성
   const getCurrentLocation = () => {
+    //포지션을 매개변수(parameter)로 위도(lat) 경도(lon) 값을 받아온다
     navigator.geolocation.getCurrentPosition((position) => {
-      let lat = position.coords.lattitude;
-      let lon = position.coords.longtitude;
+      let lat = position.coords.latitude;
+      let lon = position.coords.longitude;
       console.log("current position", lat, lon);
+      getWeatherByCurrentLocation(lat, lon);
     });
+  };
+  const getWeatherByCurrentLocation = async (lat, lon) => {
+    //매개변수, 위도와 경도를 받아 현제 위치의 날씨를 받아오는 API를 사용한다
+    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=d61cf641bb98e61451beaace9c15aa17`;
+    let res = await fetch(url); // 부를게요(res) = 기다려주세요(await) 이 url을 가져올 때 까지
+    let data = await res.json(); //부를게요(res) = 기다려주세요(await) res의 json파일을 읽어와야 하므로
+    console.log(data);
   };
 
   useEffect(() => {
