@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import "./App.css";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import WeatherButton from "./components/WeatherButton";
 import WeatherBox from "./components/WeatherBox";
@@ -16,6 +17,8 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("");
   const cities = ["Ohio", "Seoul", "Chicago"];
+  let [loading, setLoading] = useState(false);
+
   const getCurrentLocation = () => {
     //포지션을 매개변수(parameter)로 위도(lat) 경도(lon) 값을 받아온다
     navigator.geolocation.getCurrentPosition((position) => {
@@ -28,16 +31,20 @@ function App() {
   const getWeatherByCurrentLocation = async (lat, lon) => {
     //매개변수, 위도와 경도를 받아 현제 위치의 날씨를 받아오는 API를 사용한다
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=d61cf641bb98e61451beaace9c15aa17&units=metric`;
+    setLoading(true);
     let res = await fetch(url); // 부를게요(res) = 기다려주세요(await) 이 url을 가져올 때 까지
     let data = await res.json(); //부를게요(res) = 기다려주세요(await) res의 json파일을 읽어와야 하므로
     setWeather(data);
+    setLoading(false);
   };
 
   const getWeatherByCity = async () => {
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=d61cf641bb98e61451beaace9c15aa17&units=metric`;
+    setLoading(true);
     let res = await fetch(url);
     let data = await res.json();
     setWeather(data);
+    setLoading(false);
     console.log(data);
   };
 
@@ -75,10 +82,16 @@ function App() {
 
   return (
     <WeatherWrap>
-      <div className="container">
-        <WeatherBox weather={weather} />
-        <WeatherButton cities={cities} setCity={setCity} />
-      </div>
+      {loading ? (
+        <div className="container">
+          <ClipLoader color="#f88c6b" loading={loading} size={150} />
+        </div>
+      ) : (
+        <div className="container">
+          <WeatherBox weather={weather} />
+          <WeatherButton cities={cities} setCity={setCity} />
+        </div>
+      )}
     </WeatherWrap>
   );
 }
