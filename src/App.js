@@ -41,13 +41,37 @@ function App() {
     console.log(data);
   };
 
-  useEffect(() => {
-    getCurrentLocation();
-  }, []);
+  // useEffect 정리
+
+  // useEffect가 호출 되는 원리는
+  // 1. 앱이 실행이 될 때마다 호출
+  // 2. 의존성배열안에 있는 인자를 받게 되면 호출
+
+  // useEffect(() => {
+  //   getCurrentLocation();
+  // }, []);
+
+  // useEffect(() => {
+  //   getWeatherByCity();
+  // }, [city]);
+
+  // 위 useEffect가 호출 된 후 아래 useEffect가 호출되면
+  // 아래 useEffect가 최신 불러오는 값이 되며, 처음 불러오는 값은 정보가 비어있기 때문에,
+  // 앱이 실행 될때 불러올 값이 없어서 컴퓨터 입장에서 당황, 나도 당황
+
+  // so if문으로 분기점을 나눠준다
 
   useEffect(() => {
-    getWeatherByCity();
+    if (city == "") {
+      getCurrentLocation();
+    } else {
+      getWeatherByCity();
+    }
   }, [city]);
+
+  // city의 값이 비어 있다면 현제위치를 호출하는 함수 실행
+  // city 값이 정해진다면 정해진 도시 날씨 실행
+  // 굿
 
   return (
     <WeatherWrap>
