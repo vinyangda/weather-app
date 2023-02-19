@@ -2,12 +2,15 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import styled from "styled-components";
 
-const WeatherButton = () => {
+const WeatherButton = ({ cities }) => {
+  console.log(cities);
   return (
     <ButtonWrap>
       <CurrentButton>Current</CurrentButton>
-      <OtherButton>Ohio</OtherButton>
-      <OtherButton>Seoul</OtherButton>
+
+      {cities.map((item) => {
+        <CityButton>{item}</CityButton>;
+      })}
     </ButtonWrap>
   );
 };
@@ -21,7 +24,7 @@ const CurrentButton = styled.button`
   border: 1px solid white;
   margin: 10px;
 `;
-const OtherButton = styled.button`
+const CityButton = styled.button`
   background-color: rgba(1, 1, 1, 0.1);
   border: 1px solid white;
   margin: 10px;

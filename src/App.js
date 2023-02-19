@@ -14,6 +14,7 @@ import WeatherBox from "./components/WeatherBox";
 function App() {
   // 현재 위치를 가져 올 수 있는 함수 작성
   const [weather, setWeather] = useState(null);
+  const cities = ["Ohio", "Seoul", "Chicago"];
   const getCurrentLocation = () => {
     //포지션을 매개변수(parameter)로 위도(lat) 경도(lon) 값을 받아온다
     navigator.geolocation.getCurrentPosition((position) => {
@@ -40,7 +41,7 @@ function App() {
     <WeatherWrap>
       <div className="container">
         <WeatherBox weather={weather} />
-        <WeatherButton />
+        <WeatherButton cities={cities} />
       </div>
     </WeatherWrap>
   );
