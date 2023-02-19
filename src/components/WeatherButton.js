@@ -1,16 +1,25 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { useState } from "react";
+// import { Button } from "react-bootstrap";
 import styled from "styled-components";
 
 const WeatherButton = ({ cities }) => {
   console.log(cities);
+
+  //   const searchByCities=(cityName)=>{
+  //  const [city,setCity]=useState('')
+
+  //  const searchByCities=(cityName)=>{
+  //   setCity(cityName)
+  //   let url =
+  //  }
+  // }
   return (
     <ButtonWrap>
       <CurrentButton>Current</CurrentButton>
 
-      {cities.map((item) => {
-        <CityButton>{item}</CityButton>;
-      })}
+      {cities.map((item, index) => (
+        <CityButton key={index}>{item}</CityButton>
+      ))}
     </ButtonWrap>
   );
 };
