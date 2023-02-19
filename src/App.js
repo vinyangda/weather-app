@@ -14,13 +14,13 @@ import WeatherBox from "./components/WeatherBox";
 function App() {
   // 현재 위치를 가져 올 수 있는 함수 작성
   const [weather, setWeather] = useState(null);
+  const [city, setCity] = useState("");
   const cities = ["Ohio", "Seoul", "Chicago"];
   const getCurrentLocation = () => {
     //포지션을 매개변수(parameter)로 위도(lat) 경도(lon) 값을 받아온다
     navigator.geolocation.getCurrentPosition((position) => {
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
-      console.log("current position", lat, lon);
       getWeatherByCurrentLocation(lat, lon);
     });
   };
@@ -33,15 +33,27 @@ function App() {
     setWeather(data);
   };
 
+  const getWeatherByCity = async () => {
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=d61cf641bb98e61451beaace9c15aa17&units=metric`;
+    let res = await fetch(url);
+    let data = await res.json();
+    setWeather(data);
+    console.log(data);
+  };
+
   useEffect(() => {
     getCurrentLocation();
   }, []);
+
+  useEffect(() => {
+    getWeatherByCity();
+  }, [city]);
 
   return (
     <WeatherWrap>
       <div className="container">
         <WeatherBox weather={weather} />
-        <WeatherButton cities={cities} />
+        <WeatherButton cities={cities} setCity={setCity} />
       </div>
     </WeatherWrap>
   );

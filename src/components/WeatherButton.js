@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // import { Button } from "react-bootstrap";
 import styled from "styled-components";
 
-const WeatherButton = ({ cities }) => {
+const WeatherButton = ({ cities, setCity }) => {
   console.log(cities);
 
   //   const searchByCities=(cityName)=>{
@@ -18,7 +18,9 @@ const WeatherButton = ({ cities }) => {
       <CurrentButton>Current</CurrentButton>
 
       {cities.map((item, index) => (
-        <CityButton key={index}>{item}</CityButton>
+        <CityButton key={index} onClick={() => setCity(item)}>
+          {item}
+        </CityButton>
       ))}
     </ButtonWrap>
   );
